@@ -1,0 +1,55 @@
+{
+  "price_per_month": 30,
+  "members": [
+    {
+      "name": "Nishant Jadhav",
+      "payments": [
+        {
+          "paid_on": "2026-04-24",
+          "months": 4,
+          "amount": 120
+        }
+      ]
+    },
+    {
+      "name": "Swati Jadhav",
+      "payments": [
+        {
+          "paid_on": "2026-04-24",
+          "months": 2,
+          "amount": 60
+        }
+      ]
+    },
+    {
+      "name": "Raj Kadam",
+      "payments": [
+        {
+          "paid_on": "2026-04-24",
+          "months": 4,
+          "amount": 120
+        }
+      ]
+    },
+    {
+      "name": "Rishabh Yadav",
+      "payments": [
+        {
+          "paid_on": "2026-04-24",
+          "months": 1,
+          "amount": 30
+        }
+      ]
+    },
+    {
+      "name": "Vaishnavi Salve",
+      "payments": [
+        {
+          "paid_on": "2026-04-24",
+          "months": 1,
+          "amount": 30
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Music Family Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #0a0a0f; /* Deep Apple Dark */
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --bg-glass-hover: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #fa233c; /* Apple Music Pink */
+            --primary-glow: rgba(250, 35, 60, 0.3);
+            
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            
+            --card-radius: 1.25rem;
+            --inner-radius: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(250, 35, 60, 0.1) 0px, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.05) 0px, transparent 40%);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem;
+        }
+
+        /* Header Overhaul */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-box {
+            background: linear-gradient(145deg, #fa233c, #b91c1c);
+            padding: 1.25rem;
+            border-radius: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px var(--primary-glow);
+            transform: scale(1.1);
+        }
+
+        .header-title h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-top: 0.5rem;
+        }
+
+        .header-title p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .header-stats {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1.25rem 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 320px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-icon {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            padding: 0.75rem;
+            border-radius: 1rem;
+            display: flex;
+        }
+
+        .stats-info {
+            text-align: left;
+        }
+
+        .stats-info .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .stats-info .value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* Accordion Items */
+        .accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .accordion-item {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--inner-radius);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .accordion-item:active {
+            transform: scale(0.98);
+        }
+
+        .accordion-header {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .name-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            flex: 1;
+        }
+
+        .member-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.01em;
+        }
+
+        /* Responsive Layout for Header */
+        @media (max-width: 400px) {
+            .accordion-header {
+                padding: 1.25rem;
+            }
+            .member-name {
+                font-size: 1rem;
+            }
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion-item.active {
+            background: var(--bg-glass-hover);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 600px;
+        }
+
+        .content-inner {
+            padding: 1.75rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.75rem;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .details-grid {
+                gap: 1.25rem;
+            }
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .detail-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            width: fit-content;
+        }
+        .badge-success { background: rgba(52, 211, 153, 0.15); color: var(--success); }
+        .badge-warning { background: rgba(251, 191, 36, 0.15); color: var(--warning); }
+        .badge-danger { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
+
+        /* Battery Progress Bar */
+        .battery-shell {
+            position: relative;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 2px;
+            width: 100%;
+            height: 28px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+        }
+
+        .battery-shell::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            width: 3px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .battery-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .battery-text {
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #fff;
+            z-index: 10;
+        }
+        
+        .chevron {
+            transition: transform 0.4s ease;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .active .chevron {
+            transform: rotate(180deg);
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .error-message {
+            padding: 3rem;
+            text-align: center;
+            background: var(--bg-glass);
+            border-radius: var(--card-radius);
+            color: var(--danger);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+        }
+
+        /* Active highlight for left border */
+        .status-active .accordion-header { border-left: 3px solid var(--success); }
+        .status-warning .accordion-header { border-left: 3px solid var(--warning); }
+        .status-expired .accordion-header { border-left: 3px solid var(--danger); }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-title">
+                <div class="logo-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1>Apple Music</h1>
+                    <p>Plan Tracker</p>
+                </div>
+            </div>
+
+            <div class="header-stats">
+                <div class="stats-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <div class="stats-info">
+                    <p class="label">Active Members</p>
+                    <p class="value" id="active-count">0</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Accordion Container -->
+        <div class="accordion-container" id="accordion-container">
+            <!-- Items injected here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
