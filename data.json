@@ -36,8 +36,8 @@
       "payments": [
         {
           "paid_on": "2026-04-24",
-          "months": 1,
-          "amount": 30
+          "months": 4,
+          "amount": 120
         }
       ]
     },
