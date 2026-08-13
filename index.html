@@ -92,27 +92,36 @@
             letter-spacing: 0.02em;
         }
 
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.85rem;
+            width: 100%;
+        }
+
         .header-stats {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 1.25rem 2rem;
+            padding: 1rem 1.25rem;
             border-radius: 1.5rem;
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            gap: 1.25rem;
-            width: 100%;
-            max-width: 320px;
+            gap: 0.85rem;
+            flex: 1 1 150px;
+            max-width: 200px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .stats-icon {
             background: rgba(255, 255, 255, 0.05);
             color: var(--primary);
-            padding: 0.75rem;
+            padding: 0.6rem;
             border-radius: 1rem;
             display: flex;
+            flex-shrink: 0;
         }
 
         .stats-info {
@@ -128,9 +137,10 @@
         }
 
         .stats-info .value {
-            font-size: 1.75rem;
+            font-size: 1.4rem;
             font-weight: 800;
             line-height: 1.1;
+            white-space: nowrap;
         }
 
         /* Accordion Items */
@@ -254,6 +264,7 @@
         .badge-success { background: rgba(52, 211, 153, 0.15); color: var(--success); }
         .badge-warning { background: rgba(251, 191, 36, 0.15); color: var(--warning); }
         .badge-danger { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
+        .badge-upcoming { background: rgba(129, 140, 248, 0.15); color: #818cf8; }
 
         /* Battery Progress Bar */
         .battery-shell {
@@ -321,6 +332,7 @@
         .status-active .accordion-header { border-left: 3px solid var(--success); }
         .status-warning .accordion-header { border-left: 3px solid var(--warning); }
         .status-expired .accordion-header { border-left: 3px solid var(--danger); }
+        .status-upcoming .accordion-header { border-left: 3px solid #818cf8; }
     </style>
 </head>
 
@@ -340,19 +352,51 @@
                 </div>
             </div>
 
-            <div class="header-stats">
-                <div class="stats-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
+            <div class="stats-row">
+                <div class="header-stats">
+                    <div class="stats-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="stats-info">
+                        <p class="label">Active Members</p>
+                        <p class="value" id="active-count">0</p>
+                    </div>
                 </div>
-                <div class="stats-info">
-                    <p class="label">Active Members</p>
-                    <p class="value" id="active-count">0</p>
+
+                <div class="header-stats">
+                    <div class="stats-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <div class="stats-info">
+                        <p class="label">Per Month</p>
+                        <p class="value" id="price-per-month">₹0</p>
+                    </div>
+                </div>
+
+                <div class="header-stats">
+                    <div class="stats-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="stats-info">
+                        <p class="label">Slots Used</p>
+                        <p class="value" id="member-slots">0/0</p>
+                    </div>
                 </div>
             </div>
         </header>

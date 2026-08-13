@@ -78,19 +78,25 @@ function calculateCurrentStatus(member) {
 
 function processAndRenderData(data) {
     let globalTotal = 0;
-    
+    window.PRICE_PER_MONTH = data.price_per_month;
+
     const members = data.members.map(member => {
         const status = calculateCurrentStatus(member);
+        if (!status) return { ...member, isUpcoming: true };
         globalTotal += status.totalPaid;
-        return { ...member, ...status };
+        return { ...member, ...status, isUpcoming: false };
     });
 
-    members.sort((a, b) => a.expiryDate - b.expiryDate);
+    const activeList = members.filter(m => !m.isUpcoming);
+    const upcomingList = members.filter(m => m.isUpcoming);
+    activeList.sort((a, b) => a.expiryDate - b.expiryDate);
 
-    const activeMembers = members.filter(m => m.remainingDays >= 0).length;
+    const activeMembers = activeList.filter(m => m.remainingDays >= 0).length;
     document.getElementById('active-count').textContent = activeMembers;
+    document.getElementById('price-per-month').textContent = `₹${data.price_per_month}`;
+    document.getElementById('member-slots').textContent = `${members.length}/${data.max_members}`;
 
-    renderAccordion(members);
+    renderAccordion([...activeList, ...upcomingList]);
 
     setTimeout(() => {
         document.querySelectorAll('.battery-fill').forEach(fill => {
@@ -150,6 +156,38 @@ function renderAccordion(members) {
     let html = '';
 
     members.forEach((m, idx) => {
+        if (m.isUpcoming) {
+            const joinDate = m.joins_on ? formatDate(new Date(m.joins_on.split('-').join('/'))) : 'TBD';
+            html += `
+                <div class="accordion-item status-upcoming" id="item-${idx}">
+                    <div class="accordion-header" onclick="toggleAccordion(${idx})">
+                        <div class="name-section">
+                            <span class="member-name">${m.name}</span>
+                            <span class="badge badge-upcoming">Upcoming · Joins ${joinDate}</span>
+                        </div>
+                        <svg class="chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="content-inner">
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Joining Date</span>
+                                    <span class="detail-value">${joinDate}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Monthly Rate</span>
+                                    <span class="detail-value">₹${window.PRICE_PER_MONTH}/month</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
         const info = getStatusInfo(m);
         const latestPayment = m.sortedPayments[m.sortedPayments.length - 1];
 
@@ -182,6 +220,10 @@ function renderAccordion(members) {
                             <div class="detail-item">
                                 <span class="detail-label">Current Plan</span>
                                 <span class="detail-value">${latestPayment.months} Month${latestPayment.months > 1 ? 's' : ''}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Renewal Amount</span>
+                                <span class="detail-value">₹${(latestPayment.months * window.PRICE_PER_MONTH).toLocaleString('en-IN')}</span>
                             </div>
                         </div>
 

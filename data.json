@@ -1,5 +1,6 @@
 {
-  "price_per_month": 30,
+  "price_per_month": 45,
+  "max_members": 5,
   "members": [
     {
       "name": "Nishant Jadhav",
@@ -16,8 +17,8 @@
       "payments": [
         {
           "paid_on": "2026-04-24",
-          "months": 2,
-          "amount": 60
+          "months": 4,
+          "amount": 120
         }
       ]
     },
@@ -42,14 +43,9 @@
       ]
     },
     {
-      "name": "Vaishnavi Salve",
-      "payments": [
-        {
-          "paid_on": "2026-04-24",
-          "months": 1,
-          "amount": 30
-        }
-      ]
+      "name": "Shravani Sawant",
+      "joins_on": "2026-08-24",
+      "payments": []
     }
   ]
 }
